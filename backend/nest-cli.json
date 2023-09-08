@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "monorepo": true,
+  "sourceRoot": "apps/accounts/src",
+  "root": "apps/accounts",
+  "compilerOptions": {
+    "deleteOutDir": true
+  },
+  "projects": {
+    "@app/accounts": {
+      "type": "application",
+      "root": "apps/accounts",
+      "entryFile": "src/main",
+      "sourceRoot": "apps/accounts/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/accounts/tsconfig.json"
+      }
+    },
+    "@app/cashflow": {
+      "type": "application",
+      "root": "apps/cashflow",
+      "entryFile": "src/main",
+      "sourceRoot": "apps/cashflow/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/cashflow/tsconfig.json"
+      }
+    }
+  }
+}
