@@ -20,6 +20,12 @@ export class User {
   @Column()
   max_credit_limit: number
 
+  @Column()
+  account_email: string
+
+  @Column()
+  account_password_hash: string
+
   @Column({ default: false })
   active: boolean
 
