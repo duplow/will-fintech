@@ -3,4 +3,5 @@ jest.config.js
 node_modules/
 tests/
 dist/
+apps/*/dist/
 .eslintrc.js
