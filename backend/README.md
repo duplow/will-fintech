@@ -36,13 +36,15 @@ $ yarn install
 
 ```bash
 # development
-$ yarn run start
+$ yarn run start @app/accounts
+$ yarn run start @app/cashflow
 
 # watch mode
-$ yarn run start:dev
+$ yarn run start @app/accounts --watch
+$ yarn run start @app/cashflow --watch
 
-# production mode
-$ yarn run start:prod
+# all apps in watch mode
+$ yarn run start:all
 ```
 
 ## Test
