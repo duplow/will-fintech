@@ -14,7 +14,7 @@
     "start:prod": "node dist/main",
     "start:accounts:dev": "nest start @app/accounts --watch",
     "start:cashflow:dev": "nest start @app/cashflow --watch",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
