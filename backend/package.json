@@ -9,7 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:all": "concurrently \"yarn start:accounts:dev\" \"yarn start:cashflow:dev\" --kill-others",
+    "start:all": "concurrently -n \"accounts-app,cashflow-app\" \"yarn start:accounts:dev\" \"yarn start:cashflow:dev\" --kill-others",
     "start:debug": "nest start --debug --watch",
     "start:accounts": "nest start @app/accounts",
     "start:cashflow": "nest start @app/cashflow",
