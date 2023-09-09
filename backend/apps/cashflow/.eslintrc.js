@@ -21,5 +21,11 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/semi': ['warn', 'never'],
+    '@typescript-eslint/comma-dangle': ['error', 'only-multiline'],
+    'linebreak-style': ['error', 'unix'],
+    'eol-last': ["error", "always"],
+    'no-trailing-spaces': 'error',
+    '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }]
   },
 };
