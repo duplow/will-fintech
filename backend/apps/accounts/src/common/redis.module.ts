@@ -3,7 +3,7 @@ import { RedisService } from './redis.service'
 import { Redis } from 'ioredis'
 import {
   ConnectionProvider,
-  RedisConnectionOptions
+  RedisConnectionOptions,
 } from './connection.provider'
 
 let redisClient: Redis = null
@@ -18,10 +18,9 @@ export const getSingleton = (): Redis => {
   providers: [RedisService, Logger],
 })
 export class RedisModule {
-
   constructor(
     private logger: Logger,
-    private connection: ConnectionProvider
+    private connection: ConnectionProvider,
   ) {}
 
   static forRoot(options?: RedisConnectionOptions): DynamicModule {

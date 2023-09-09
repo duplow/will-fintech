@@ -7,7 +7,7 @@ import { Repository } from 'typeorm'
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>
+    private usersRepository: Repository<User>,
   ) {}
 
   getUsers(): Promise<User[]> {

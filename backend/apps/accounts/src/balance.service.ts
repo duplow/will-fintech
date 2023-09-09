@@ -13,7 +13,7 @@ export class BalanceService {
   constructor(
     private readonly httpService: HttpService,
     @InjectQueue('balance')
-    private balanceQueue: Queue
+    private balanceQueue: Queue,
   ) {}
 
   getUserBalance(user: User | string) {
@@ -23,9 +23,9 @@ export class BalanceService {
   updateUserBalanceAsync(user: User | string) {
     this.balanceQueue.add(
       {
-        userId: getUserId(user)
+        userId: getUserId(user),
       },
-      { priority: 1, delay: 3000, backoff: 3000, attempts: 3 }
+      { priority: 1, delay: 3000, backoff: 3000, attempts: 3 },
     )
   }
 }

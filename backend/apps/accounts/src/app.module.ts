@@ -16,11 +16,11 @@ import { RedisModule } from './common/redis.module'
     BullModule.forRoot({
       redis: {
         host: 'localhost',
-        port: 5379
-      }
+        port: 5379,
+      },
     }),
     BullModule.registerQueue({
-      name: 'balance'
+      name: 'balance',
     }),
     /*
     TypeOrmModule.forRootAsync({
@@ -48,13 +48,13 @@ import { RedisModule } from './common/redis.module'
       password: 'postgres',
       database: 'cash_flow',
       synchronize: false,
-      autoLoadEntities: true
+      autoLoadEntities: true,
     }),
     TypeOrmModule.forFeature([User]),
     //RedisModule
-    RedisModule.forRoot({ connectionString: 'redis://localhost:6379' })
+    RedisModule.forRoot({ connectionString: 'redis://localhost:6379' }),
   ],
   controllers: [AppController],
-  providers: [AppService, UserService, BalanceService, AudioConsumer]
+  providers: [AppService, UserService, BalanceService, AudioConsumer],
 })
 export class AppModule {}

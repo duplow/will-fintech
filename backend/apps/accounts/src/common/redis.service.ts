@@ -4,7 +4,7 @@ import { Injectable, Logger } from '@nestjs/common'
 export class RedisService {
   constructor(private logger: Logger) {}
 
-  setValue(key: string, value: any) {
+  setValue(key: string, _value: any) {
     this.logger.log(`[Redis] Storing value for key ${key}`)
   }
 

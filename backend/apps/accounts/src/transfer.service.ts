@@ -6,8 +6,8 @@ import { User } from './entities/user.entity'
 import { v4 as uuid } from 'uuid'
 
 type TransactionOptions = {
-  senderId: string,
-  receiverId: string,
+  senderId: string
+  receiverId: string
   amount: number
 }
 
@@ -29,15 +29,16 @@ export class TransferService {
       throw new Error('Transfer receiver cannot be same as sender')
 
     const [sender, receiver] = await Promise.all([
-      this.usersRepository.findOne({ id: transaction.senderId }), // TODO: Change to UserService, AccountService or CustomerService
-      this.usersRepository.findOne({ id: transaction.receiverId }),
+      this.usersRepository.findOneBy({ id: transaction.senderId }), // TODO: Change to UserService, AccountService or CustomerService
+      this.usersRepository.findOneBy({ id: transaction.receiverId }),
     ])
 
     if (!sender) throw new Error('User sender not found')
 
     if (!receiver) throw new Error('User receiver not found')
 
-    if (sender.balance < transaction.amount) // TODO: Get updated balance
+    if (sender.balance < transaction.amount)
+      // TODO: Get updated balance
       throw new Error('Insufficient funds')
   }
 
@@ -50,22 +51,22 @@ export class TransferService {
         await this.validateTransaction(transaction)
 
         const [sender, receiver] = await Promise.all([
-          this.usersRepository.findOne({ id: transaction.senderId }),
-          this.usersRepository.findOne({ id: transaction.receiverId }),
+          this.usersRepository.findOneBy({ id: transaction.senderId }),
+          this.usersRepository.findOneBy({ id: transaction.receiverId }),
         ])
 
         await this.balanceTransactionRepository.save({
           user_id: transaction.senderId,
           amount: transaction.amount * -1,
           description: `Transfer to ${receiver.nickname}`,
-          correlation_id,
+          correlation_id: correlationId,
         })
 
         await this.balanceTransactionRepository.save({
           user_id: transaction.receiverId,
           amount: transaction.amount,
           description: `Transfer from ${sender.nickname}`,
-          correlation_id,
+          correlation_id: correlationId,
         })
 
         // TODO: Check transaction before commit

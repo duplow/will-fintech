@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common'
 
 export interface RedisConnectionOptions {
   connectionString?: string
-  port?: string | number,
-  host?: string,
-  username?: string,
-  password?: string,
-  db?: string | number,
+  port?: string | number
+  host?: string
+  username?: string
+  password?: string
+  db?: string | number
 }
 
 @Injectable()
