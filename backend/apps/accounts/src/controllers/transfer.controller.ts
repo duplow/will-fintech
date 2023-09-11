@@ -27,6 +27,7 @@ export class TransferController {
   }
 
   @Get('/:id')
+  @SetMetadata('throws', Error)
   getTransfer(): string {
     throw new Error('Not implemented yet.')
   }

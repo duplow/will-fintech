@@ -4,7 +4,13 @@ import { BalanceTransaction } from '../entities/balance_transaction.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 import { User } from '../entities/user.entity'
 import { v4 as uuid } from 'uuid'
-import { MakeTransferUC, TransactionOptions } from '../core/make_transfer.uc'
+import {
+  InsufficientFundsException,
+  MakeTransferUC,
+  TransactionOptions,
+  TransferAmountCannotBeNegativeOrZeroException,
+  UserNotFoundException,
+} from '../core/make_transfer.uc'
 
 @Injectable()
 export class MakeTransferServiceImpl implements MakeTransferUC {
@@ -16,26 +22,37 @@ export class MakeTransferServiceImpl implements MakeTransferUC {
     private balanceTransactionRepository: Repository<BalanceTransaction>, // TODO: Replace per a BalanceTransactionService or BalanceTransactionRepositoryService
   ) {}
 
+  /**
+   * Validate transaction
+   * @throws InsufficientFundsException
+   * @throws UserNotFoundException
+   * @throws TransferAmountCannotBeNegativeOrZeroException
+   */
   async validateTransaction(
     transaction: TransactionOptions,
     sender: User,
     receiver: User,
   ) {
     if (transaction.amount <= 0)
-      throw new Error('Amount cannot be negative or equal zero')
+      throw new TransferAmountCannotBeNegativeOrZeroException(
+        'Amount cannot be negative or equal zero',
+      )
 
     if (transaction.senderId === transaction.receiverId)
       throw new Error('Transfer receiver cannot be same as sender')
 
-    if (!sender) throw new Error('User sender not found')
+    if (!sender) throw new UserNotFoundException('User sender not found')
 
-    if (!receiver) throw new Error('User receiver not found')
+    if (!receiver) throw new UserNotFoundException('User receiver not found')
 
     if (sender.balance < transaction.amount)
       // TODO: Get updated balance
-      throw new Error('Insufficient funds')
+      throw new InsufficientFundsException('Insufficient funds')
   }
 
+  @Throws(InsufficientFundsException)
+  @Throws(UserNotFoundException)
+  @Throws(TransferAmountCannotBeNegativeOrZeroException)
   async execute(transaction: TransactionOptions) {
     ;(async () => {
       const correlationId = uuid()
