@@ -6,7 +6,7 @@ export const RequestId = () => {
     propertyKey: string,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     parameterIndex: number,
-  ): string => {
+  ): any => {
     console.log('Return req.requestId or X-Request-Id header')
     return 'FAKE-X-REQUEST-ID'
   }

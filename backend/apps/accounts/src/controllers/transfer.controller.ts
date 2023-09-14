@@ -27,7 +27,6 @@ export class TransferController {
   }
 
   @Get('/:id')
-  @SetMetadata('throws', Error)
   getTransfer(): string {
     throw new Error('Not implemented yet.')
   }
@@ -35,10 +34,9 @@ export class TransferController {
   @Post('/')
   @AuthRequired()
   makeTransfer(
-    @Body data: MakeTransferPayload,
+    @Body() data: MakeTransferPayload,
     @AuthenticatedUser() sender: User,
-    @Header('X-Request-Id') requestId: string,
-    @RequestId() _requestId: string,
+    @RequestId() requestId: string,
   ) {
     const transactionOptions: TransactionOptions = {
       senderId: sender.id,

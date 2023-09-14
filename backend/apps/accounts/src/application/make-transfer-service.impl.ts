@@ -50,15 +50,19 @@ export class MakeTransferServiceImpl implements MakeTransferUC {
       throw new InsufficientFundsException('Insufficient funds')
   }
 
-  @Throws(InsufficientFundsException)
-  @Throws(UserNotFoundException)
-  @Throws(TransferAmountCannotBeNegativeOrZeroException)
+  /**
+   * Validate transaction
+   * @throws InsufficientFundsException
+   * @throws UserNotFoundException
+   * @throws TransferAmountCannotBeNegativeOrZeroException
+   */
   async execute(transaction: TransactionOptions) {
     ;(async () => {
       const correlationId = uuid()
 
       try {
         // Start database transaction
+        // Try to get locks for this operation on redis
 
         const [sender, receiver] = await Promise.all([
           this.usersRepository.findOneBy({ id: transaction.senderId }),

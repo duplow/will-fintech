@@ -8,7 +8,7 @@ export const AuthenticatedUser = () => {
     propertyKey: string,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     parameterIndex: number,
-  ): User => {
+  ): void => {
     console.log('Return current authenticated user')
   }
 }

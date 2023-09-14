@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { Logger, Module } from '@nestjs/common'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
 import { TypeOrmModule } from '@nestjs/typeorm'
@@ -9,10 +9,18 @@ import { BullModule } from '@nestjs/bull'
 import { BalanceService } from './balance.service'
 import { AudioConsumer } from './audio.consumer'
 import { RedisModule } from './common/redis.module'
+import { ConfigurationModule } from './configuration.module'
+import { DatabaseModule } from './database.module'
+import { AuthController } from './controllers/auth.controller'
+import { CustomerSignUpImpl } from './application/auth/customer-sign-up.uc.impl'
+import { CustomerSignInImpl } from './application/auth/customer-sign-in.uc.impl'
+import { AuthenticationServiceImpl } from './application/auth/authentication-service'
 
 @Module({
   imports: [
     HttpModule,
+    ConfigurationModule,
+    DatabaseModule,
     BullModule.forRoot({
       redis: {
         host: 'localhost',
@@ -22,39 +30,20 @@ import { RedisModule } from './common/redis.module'
     BullModule.registerQueue({
       name: 'balance',
     }),
-    /*
-    TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: (configService: ConfigService) => {
-        return {
-          type: 'postgres',
-          host: 'localhost',
-          port: 3306,
-          username: configService.get('USERNAME'),
-          password: 'root',
-          database: 'test',
-          synchronize: false,
-          autoLoadEntities: true,
-        },
-      },
-    }),
-    */
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'cash_flow',
-      synchronize: false,
-      autoLoadEntities: true,
-    }),
     TypeOrmModule.forFeature([User]),
-    //RedisModule
     RedisModule.forRoot({ connectionString: 'redis://localhost:6379' }),
   ],
-  controllers: [AppController],
-  providers: [AppService, UserService, BalanceService, AudioConsumer],
+  controllers: [AppController, AuthController],
+  providers: [
+    AppService,
+    UserService,
+    BalanceService,
+    AudioConsumer,
+    CustomerSignUpImpl,
+    CustomerSignInImpl,
+    UserService,
+    Logger,
+    AuthenticationServiceImpl,
+  ],
 })
 export class AppModule {}
